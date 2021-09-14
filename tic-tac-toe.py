@@ -43,7 +43,7 @@ class Game:
             self.board_values[pos[0]][pos[1]] = "X"
         else:
             self.board_values[pos[0]][pos[1]] = "O"
-        self.check_win()
+        print(self.check_win())
         self.refresh()
 
     def check_win(self):
@@ -60,22 +60,18 @@ class Game:
                     return "X"
                 if count == self.board_size and fvalue == "O":
                     return "O"
-        # Vertical
+        """# Vertical
         count = 0
         for column in range(len(self.board_values[0])):
             values = []
             for row in range(len(self.board_values)):
-                print(self.board_values[row][column])
                 if count == 0:
-                    """fvalue = self.board[row][column]"""
+                    fvalue = self.board_values[row][column]
+                if fvalue == self.board_values[row][column]:
+                    count += 1
                 values.append(self.board_values[row][column])
-                for column_value in values:
-                    if column_value ==
                 if count == self.board_size and fvalue == "X":
-                    return "X"
-
-
-
+                    return "X"""
 
     def board(self):
         if self.screen == 0:
