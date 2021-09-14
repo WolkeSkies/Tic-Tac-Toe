@@ -48,30 +48,32 @@ class Game:
 
     def check_win(self):
         # Horizontal
-        count = 0
         for row in self.board_values:
+            count = 0
             for column in row:
-                if count == 0:
-                    fvalue = column
-                if fvalue == column:
+                if column == " ":
+                    break
+                else:
                     count += 1
-                if count == self.board_size and fvalue == "X":
-                    print("True")
+            if count == self.board_size:
+                if column == "X":
                     return "X"
-                if count == self.board_size and fvalue == "O":
+                else:
                     return "O"
-        """# Vertical
-        count = 0
-        for column in range(len(self.board_values[0])):
-            values = []
-            for row in range(len(self.board_values)):
-                if count == 0:
-                    fvalue = self.board_values[row][column]
-                if fvalue == self.board_values[row][column]:
+
+        # Vertical
+        for i in range(self.board_size):
+            vertical = []
+            count = 0
+            for row in range(self.board_size):
+                vertical.append(self.board_values[row][0])
+            fvalue = vertical[0]
+            for value in vertical:
+                if fvalue == value:
                     count += 1
-                values.append(self.board_values[row][column])
-                if count == self.board_size and fvalue == "X":
-                    return "X"""
+            if count == self.board_size:
+                return value
+        # Diagonal
 
     def board(self):
         if self.screen == 0:
