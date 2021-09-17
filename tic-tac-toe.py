@@ -69,15 +69,25 @@ class Game:
             widget.destroy()
 
     def winner_screen(self):
+        self.turn = 1
+
         def restart():
-            self.screen = 0
             self.refresh()
+            self.empty_board()
+
+        def main_menu():
+            self.refresh()
+            self.screen = 0
+            self.main_menu()
 
         Label(self.root, text=self.check_win() + " Wins!").grid(row=0, column=1)
         Button(self.root, text="Play Again!", bg="green", command=restart).grid(row=2, column=2)
-        Button(self.root, text="Return To Main Menu", bg="red").grid(row=2, column=0)
+        Button(self.root, text="Return To Main Menu", bg="red", command=lambda: main_menu()).grid(row=2, column=0)
 
     def empty_board(self):
+        def main_menu():
+            self.refresh()
+            self.main_menu()
         self.board_values = []
         for row in range(self.board_size):
             self.board_values.append([])
@@ -86,8 +96,12 @@ class Game:
                 Button(self.root, text=self.board_values[row][column], height=5, width=10,
                        command=lambda r=row, c=column: self.move([r, c])).grid(row=row, column=column)
         self.screen = 1
+        Button(self.root, text="Main Menu", command=lambda: main_menu()).grid(row=self.board_size, column=self.board_size)
 
     def draw_board(self):
+        def main_menu():
+            self.refresh()
+            self.main_menu()
         if self.check_win() is None:
             for row in range(self.board_size):
                 for column in range(self.board_size):
@@ -95,6 +109,7 @@ class Game:
                            command=lambda r=row, c=column: self.move([r, c])).grid(row=row, column=column)
         else:
             self.winner_screen()
+        Button(self.root, text="Main Menu").grid(row=self.board_size, column=self.board_size)
 
     def move(self, pos):
         if self.turn % 2 == 1 and self.board_values[pos[0]][pos[1]] == " ":
