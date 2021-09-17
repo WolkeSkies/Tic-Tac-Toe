@@ -22,6 +22,7 @@ class Game:
     def main_menu(self):
         def multiplayer():
             self.refresh()
+            self.screen = 1
             self.multiplayer()
 
         def singleplayer():
@@ -29,17 +30,21 @@ class Game:
             self.singleplayer()
 
         Button(self.root, text="SinglePlayer", command=lambda: singleplayer()).grid(row=0, column=0)
-        Button(self.root, text="SinglePlayer", command=lambda: multiplayer()).grid(row=0, column=1)
+        Button(self.root, text="MultiPlayer", command=lambda: multiplayer()).grid(row=0, column=1)
         self.root.mainloop()
 
     def board(self):
-        if s
+        if self.screen == 0:
+            self.empty_board()
+        elif self.screen == 1:
+            self.draw_board()
 
     def multiplayer(self):
         def board():
             self.screen = 0
             self.board_size = int(board_size.get())
             self.refresh()
+            self.board()
 
         board_size = StringVar()
         Label(self.root, text="Size of Grid:").grid(row=0, column=0)
@@ -51,6 +56,7 @@ class Game:
             self.screen = 0
             self.board_size = int(board_size.get())
             self.refresh()
+            self.board()
 
         board_size = StringVar()
         Label(self.root, text="Size of Grid:").grid(row=0, column=0)
@@ -82,10 +88,13 @@ class Game:
         self.screen = 1
 
     def draw_board(self):
-        for row in range(self.board_size):
-            for column in range(self.board_size):
-                Button(self.root, text=self.board_values[row][column], height=5, width=10,
-                       command=lambda r=row, c=column: self.move([r, c])).grid(row=row, column=column)
+        if self.check_win() is None:
+            for row in range(self.board_size):
+                for column in range(self.board_size):
+                    Button(self.root, text=self.board_values[row][column], height=5, width=10,
+                           command=lambda r=row, c=column: self.move([r, c])).grid(row=row, column=column)
+        else:
+            self.winner_screen()
 
     def move(self, pos):
         if self.turn % 2 == 1 and self.board_values[pos[0]][pos[1]] == " ":
@@ -96,6 +105,7 @@ class Game:
             self.turn += 1
         print(self.check_win())
         self.refresh()
+        self.board()
 
     def check_win(self):
         # Horizontal
