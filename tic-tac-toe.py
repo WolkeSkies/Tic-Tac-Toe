@@ -3,6 +3,8 @@
 # 09/17/2021
 from tkinter import *
 from tkinter import messagebox
+import random
+
 
 class Game:
     def __init__(self):
@@ -18,6 +20,33 @@ class Game:
         self.main_menu()
 
     def main_menu(self):
+        def multiplayer():
+            self.refresh()
+            self.multiplayer()
+
+        def singleplayer():
+            self.refresh()
+            self.singleplayer()
+
+        Button(self.root, text="SinglePlayer", command=lambda: singleplayer()).grid(row=0, column=0)
+        Button(self.root, text="SinglePlayer", command=lambda: multiplayer()).grid(row=0, column=1)
+        self.root.mainloop()
+
+    def board(self):
+        if s
+
+    def multiplayer(self):
+        def board():
+            self.screen = 0
+            self.board_size = int(board_size.get())
+            self.refresh()
+
+        board_size = StringVar()
+        Label(self.root, text="Size of Grid:").grid(row=0, column=0)
+        Entry(self.root, textvariable=board_size).grid(row=1, column=0)
+        Button(self.root, text="Enter", command=lambda: board()).grid(row=1, column=1)
+
+    def singleplayer(self):
         def board():
             self.screen = 0
             self.board_size = int(board_size.get())
@@ -32,12 +61,6 @@ class Game:
     def refresh(self):
         for widget in self.root.winfo_children():
             widget.destroy()
-        if self.screen == 0:
-            self.empty_board()
-        elif self.check_win() is None:
-            self.draw_board()
-        else:
-            self.winner_screen()
 
     def winner_screen(self):
         def restart():
