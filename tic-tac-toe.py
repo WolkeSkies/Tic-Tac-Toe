@@ -17,6 +17,7 @@ class Game:
         self.column = 0
         self.screen = 0
         self.turn = 1
+        self.kale = 0
         self.main_menu()
 
     def main_menu(self):
@@ -27,10 +28,11 @@ class Game:
 
         def singleplayer():
             self.refresh()
+            self.kale = 1
             self.singleplayer()
 
-        Button(self.root, text="SinglePlayer", command=lambda: singleplayer()).grid(row=0, column=0)
-        Button(self.root, text="MultiPlayer", command=lambda: multiplayer()).grid(row=0, column=1)
+        Button(self.root, text="Singleplayer", command=lambda: singleplayer()).grid(row=0, column=0)
+        Button(self.root, text="Multiplayer", command=lambda: multiplayer()).grid(row=0, column=1)
         self.root.mainloop()
 
     def board(self):
@@ -65,8 +67,11 @@ class Game:
         self.root.mainloop()
 
     def refresh(self):
+        def exit():
+            exit()
         for widget in self.root.winfo_children():
             widget.destroy()
+        Button(self.root, text="Exit", command=lambda: exit()).grid(row=self.board_size, column=0)
 
     def winner_screen(self):
         self.turn = 1
@@ -107,9 +112,13 @@ class Game:
                 for column in range(self.board_size):
                     Button(self.root, text=self.board_values[row][column], height=5, width=10,
                            command=lambda r=row, c=column: self.move([r, c])).grid(row=row, column=column)
+            if self.kale == 1 and self.turn % 2 == 0:
+                bruh = random.randint(0, self.board_size - 1)
+                bruh2 = random.randint(0, self.board_size - 1)
+                self.move([bruh, bruh2])
         else:
             self.winner_screen()
-        Button(self.root, text="Main Menu").grid(row=self.board_size, column=self.board_size)
+        Button(self.root, text="Main Menu", command=lambda: main_menu()).grid(row=self.board_size, column=self.board_size)
 
     def move(self, pos):
         if self.turn % 2 == 1 and self.board_values[pos[0]][pos[1]] == " ":
